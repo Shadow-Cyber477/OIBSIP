@@ -1,0 +1,62 @@
+================================================================================
+                           NMAP NETWORK SCAN RESULTS
+================================================================================
+Target Hostname: scanme.nmap.org
+Target IP      : 45.33.32.156
+Scan Date      : September 25, 2026
+Scanner Version: Nmap 7.95
+
+--------------------------------------------------------------------------------
+1. OPEN PORTS AND RUNNING SERVICES
+--------------------------------------------------------------------------------
+PORT      STATE SERVICE    VERSION / DETAILS
+22/tcp    open  ssh        OpenSSH 6.6.1p1 Ubuntu 2ubuntu2.13 (Ubuntu Linux)
+25/tcp    open  smtp       SMTP (Service active; response: "421 Too many connections")
+53/tcp    open  domain     DNS (Generic DNS server)
+80/tcp    open  http       Apache httpd 2.4.7 ((Ubuntu))
+9929/tcp  open  nping-echo Nping echo service
+31337/tcp open  Elite      tcpwrapped / Backorifice legacy port
+
+--------------------------------------------------------------------------------
+2. OPERATING SYSTEM DETECTION
+--------------------------------------------------------------------------------
+OS Family       : Linux
+Kernel Estimate : Linux 4.19 - 5.15 (98% confidence)
+Network Distance: 22 hops
+
+--------------------------------------------------------------------------------
+3. OPEN PORTS ANALYSIS & SECURITY RISK EVALUATION
+--------------------------------------------------------------------------------
+
+[Port 22/tcp - SSH]
+- Service Description: Secure Shell (SSH) provides encrypted terminal access for remote system administration.
+- Version Detected: OpenSSH 6.6.1p1 Ubuntu
+- Security Risk: Moderate to High. The detected OpenSSH version is outdated and contains known vulnerabilities if left unpatched. Public exposure can also leave it susceptible to password brute-force attacks unless key-based authentication and rate-limiting (e.g., Fail2ban) are enforced.
+
+[Port 25/tcp - SMTP]
+- Service Description: Simple Mail Transfer Protocol (SMTP) handles mail transfer across networks.
+- Version Detected: Generic SMTP
+- Security Risk: Moderate. Unsecured SMTP servers can be exploited by attackers for spam relaying, email spoofing, or user enumeration (via VRFY/EXPN commands) if open relay controls are not properly configured.
+
+[Port 53/tcp - DNS]
+- Service Description: Domain Name System (DNS) resolves domain names into IP addresses.
+- Version Detected: Generic DNS
+- Security Risk: Moderate. Exposing TCP DNS services publicly can allow amplification/reflection DDoS attacks or cache poisoning if the server acts as an open resolver.
+
+[Port 80/tcp - HTTP]
+- Service Description: Hypertext Transfer Protocol (HTTP) serves unencrypted web pages over the web.
+- Version Detected: Apache httpd 2.4.7 (Ubuntu)
+- Security Risk: High. Traffic is transmitted in plain text, making it vulnerable to eavesdropping and Man-in-the-Middle (MitM) attacks. Additionally, Apache 2.4.7 is an older build containing multiple public CVEs. Web traffic should be redirected to HTTPS (Port 443).
+
+[Port 9929/tcp - NPING-ECHO]
+- Service Description: Nping Echo service used by Nmap to measure response characteristics and packet loss.
+- Version Detected: Nping echo
+- Security Risk: Low. This is a specific tool diagnostic port enabled on scanme.nmap.org for testing purposes, but running specialized probe services on standard production hosts unnecessarily expands the attack surface.
+
+[Port 31337/tcp - ELITE / TCPWRAPPED]
+- Service Description: Historically associated with "Back Orifice" Trojan access; currently protected or managed by tcpwrapper/firewall rules.
+- Version Detected: tcpwrapped
+- Security Risk: Low to Moderate. While `tcpwrapped` indicates that the underlying service rejected or closed the connection according to access rules, keeping legacy hacker-culture or non-standard ports active can attract unwanted port scanning activity.
+
+
+BY : ZAGLAGO WELBECK
